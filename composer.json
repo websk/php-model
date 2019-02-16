@@ -1,0 +1,12 @@
+{
+    "name": "websk/php-model",
+    "require": {
+        "websk/php-db": "1.2.*",
+        "websk/php-cache": "1.1.*",
+        "websk/php-config": "1.0.*",
+        "websk/php-utils": "1.0.*"
+    },
+    "autoload": {
+        "psr-4": { "": "src/" }
+    }
+}
