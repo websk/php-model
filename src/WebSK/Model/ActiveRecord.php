@@ -75,7 +75,9 @@ trait ActiveRecord
             foreach ($model_class_name::$related_models_arr as $related_model_class_name => $related_model_data) {
                 Assert::assert(array_key_exists('link_field', $related_model_data));
 
-                $related_ids_arr = $this->$related_model_data['field_name'];
+                $related_field_name = $related_model_data['field_name'];
+
+                $related_ids_arr = $this->$related_field_name;
                 if (!empty($related_ids_arr)
                     && array_key_exists('removal_of_banned', $related_model_data)
                     && ($related_model_data['removal_of_banned'] === true)
@@ -84,7 +86,7 @@ trait ActiveRecord
                 }
 
                 // Удаляем связанные данные
-                $related_ids_arr = $this->$related_model_data['field_name'];
+                $related_ids_arr = $this->$related_field_name;
                 foreach ($related_ids_arr as $related_id) {
                     $related_model_obj = Factory::createAndLoadObject($related_model_class_name, $related_id);
                     $related_model_obj->delete();
