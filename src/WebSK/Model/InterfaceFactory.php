@@ -10,15 +10,16 @@ namespace WebSK\Model;
  */
 interface InterfaceFactory
 {
-    public static function factory($id_to_load, $exception_if_not_loaded = true);
 
-    public static function factoryByFieldsArr($fields_arr, $exception_if_not_loaded = true);
+    public static function factory(int $id_to_load, bool $exception_if_not_loaded = true);
 
-    public static function getMyGlobalizedClassName();
+    public static function factoryByFieldsArr(array $fields_arr, bool $exception_if_not_loaded = true);
 
-    public static function removeObjFromCacheById($id_to_remove);
+    public static function getMyGlobalizedClassName(): string;
 
-    public static function afterUpdate($id);
+    public static function removeObjFromCacheById(int $id_to_remove);
+
+    public static function afterUpdate(int $id);
 
     public function beforeDelete();
 

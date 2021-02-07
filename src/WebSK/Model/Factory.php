@@ -7,37 +7,40 @@ use WebSK\Cache\CacheWrapper;
 use WebSK\Utils\Assert;
 
 /**
- * Базовая фабрика объектов.
+ * Class Factory
+ * @package WebSK\Model
  */
 class Factory
 {
+    const DEFAULT_CACHE_TTL_SEC = 60;
+
     /**
-     * @param $class_name
-     * @param $object_id
+     * @param string $class_name
+     * @param int $object_id
      * @return string
      */
-    protected static function getObjectCacheId($class_name, $object_id)
+    protected static function getObjectCacheId(string $class_name, int $object_id): string
     {
         return $class_name . '::' . $object_id;
     }
 
     /**
-     * @param $class_name
-     * @param $object_id
+     * @param string $class_name
+     * @param int $object_id
      */
-    public static function removeObjectFromCache($class_name, $object_id)
+    public static function removeObjectFromCache(string $class_name, int $object_id)
     {
         $cache_key = self::getObjectCacheId($class_name, $object_id);
         CacheWrapper::delete($cache_key);
     }
 
     /**
-     * @param $class_name
-     * @param $object_id
-     * @return bool|mixed|null
+     * @param string $class_name
+     * @param int $object_id
+     * @return mixed|null
      * @throws \Exception
      */
-    public static function createAndLoadObject($class_name, $object_id)
+    public static function createAndLoadObject(string $class_name, int $object_id)
     {
         $cache_key = self::getObjectCacheId($class_name, $object_id);
 
@@ -55,7 +58,7 @@ class Factory
             return null;
         }
 
-        $cache_ttl_seconds = ConfWrapper::value('cache.expire');
+        $cache_ttl_seconds = (int)ConfWrapper::value('cache.expire', self::DEFAULT_CACHE_TTL_SEC);
 
         if ($obj instanceof InterfaceCacheTtlSeconds) {
             $cache_ttl_seconds = $obj->getCacheTtlSeconds();
@@ -69,10 +72,10 @@ class Factory
     /**
      * @param $class_name
      * @param $fields_arr
-     * @return bool|mixed|null
+     * @return mixed|null
      * @throws \Exception
      */
-    public static function createAndLoadObjectByFieldsArr($class_name, $fields_arr)
+    public static function createAndLoadObjectByFieldsArr(string $class_name, array $fields_arr)
     {
         $obj = new $class_name;
 

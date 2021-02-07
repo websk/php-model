@@ -15,16 +15,15 @@ class ActiveRecordHelper
      * @param $model_obj
      * @return string
      */
-    public static function getIdFieldName($model_obj)
+    public static function getIdFieldName($model_obj): string
     {
         $obj_class_name = get_class($model_obj);
 
         if (defined($obj_class_name . '::DB_ID_FIELD_NAME')) {
-            $id_field_name = $obj_class_name::DB_ID_FIELD_NAME;
-        } else {
-            $id_field_name = 'id';
+            return  $obj_class_name::DB_ID_FIELD_NAME;
         }
-        return $id_field_name;
+
+        return 'id';
     }
 
     /**
@@ -102,7 +101,7 @@ class ActiveRecordHelper
      * @param $id
      * @return bool
      */
-    public static function loadModelObj($model_obj, $id)
+    public static function loadModelObj($model_obj, int $id)
     {
         self::exceptionIfObjectIsIncompatibleWithActiveRecord($model_obj);
 
@@ -150,7 +149,13 @@ class ActiveRecordHelper
         return true;
     }
 
-    public static function getIdByFieldNamesArr($model_obj, $field_names_arr)
+    /**
+     * @param $model_obj
+     * @param array $field_names_arr
+     * @return int|null
+     * @throws \Exception
+     */
+    public static function getIdByFieldNamesArr($model_obj, array $field_names_arr): ?int
     {
         $model_class_name = get_class($model_obj);
         $db_table_name = $model_class_name::DB_TABLE_NAME;
@@ -158,8 +163,8 @@ class ActiveRecordHelper
 
         $query = "SELECT " . $db_id_field_name . " FROM " . $db_table_name . " WHERE";
 
-        $queries_arr = array();
-        $param_arr = array();
+        $queries_arr = [];
+        $param_arr = [];
 
         foreach ($field_names_arr as $field_name => $field_value) {
             $queries_arr[] = $field_name . "=?";
@@ -172,6 +177,10 @@ class ActiveRecordHelper
             $query,
             $param_arr
         );
+
+        if ($id === false) {
+            return null;
+        }
 
         return $id;
     }
@@ -220,7 +229,11 @@ class ActiveRecordHelper
         self::exceptionIfClassIsIncompatibleWithActiveRecord($obj_class_name);
     }
 
-    public static function exceptionIfClassIsIncompatibleWithActiveRecord($class_name)
+    /**
+     * @param string $class_name
+     * @throws \Exception
+     */
+    public static function exceptionIfClassIsIncompatibleWithActiveRecord(string $class_name)
     {
         if (!defined($class_name . '::DB_TABLE_NAME')) {
             throw new \Exception('class must provide DB_TABLE_NAME constant to use ActiveRecord');

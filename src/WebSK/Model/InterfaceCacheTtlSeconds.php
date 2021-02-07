@@ -8,5 +8,8 @@ namespace WebSK\Model;
  */
 interface InterfaceCacheTtlSeconds
 {
-    public function getCacheTtlSeconds();
+    /**
+     * @return int
+     */
+    public function getCacheTtlSeconds(): int;
 }

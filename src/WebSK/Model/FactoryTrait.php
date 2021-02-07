@@ -17,7 +17,7 @@ trait FactoryTrait
      * Возвращает глобализованное имя класса модели.
      * @return string
      */
-    public static function getMyGlobalizedClassName()
+    public static function getMyGlobalizedClassName(): string
     {
         $class_name = get_called_class(); // "Gets the name of the class the static method is called in."
         $class_name = Helper::globalizeClassName($class_name);
@@ -27,11 +27,11 @@ trait FactoryTrait
 
     /**
      * Базовая загрузка объекта по Id
-     * @param $id_to_load
+     * @param int $id_to_load
      * @param bool|true $exception_if_not_loaded
      * @return $this
      */
-    public static function factory($id_to_load, $exception_if_not_loaded = true)
+    public static function factory(int $id_to_load, bool $exception_if_not_loaded = true)
     {
         $class_name = self::getMyGlobalizedClassName();
         $obj = Factory::createAndLoadObject($class_name, $id_to_load);
@@ -45,11 +45,11 @@ trait FactoryTrait
 
     /**
      * Загрузка объекта по набору полей
-     * @param $fields_arr - array($field_name => $field_value)
-     * @param bool|true $exception_if_not_loaded
+     * @param array $fields_arr - array($field_name => $field_value)
+     * @param bool $exception_if_not_loaded
      * @return $this
      */
-    public static function factoryByFieldsArr($fields_arr, $exception_if_not_loaded = true)
+    public static function factoryByFieldsArr(array $fields_arr, bool $exception_if_not_loaded = true)
     {
         $class_name = self::getMyGlobalizedClassName();
         $obj = Factory::createAndLoadObjectByFieldsArr($class_name, $fields_arr);
@@ -62,9 +62,9 @@ trait FactoryTrait
     }
 
     /**
-     * @param $id_to_remove
+     * @param int $id_to_remove
      */
-    public static function removeObjFromCacheById($id_to_remove)
+    public static function removeObjFromCacheById(int $id_to_remove)
     {
         $class_name = self::getMyGlobalizedClassName();
         Factory::removeObjectFromCache($class_name, $id_to_remove);
@@ -74,9 +74,9 @@ trait FactoryTrait
      * Базовая обработка изменения.
      * Если на это событие есть подписчики - нужно переопределить обработчик в самом классе и там eventmanager::invoke, где уже подписать остальных подписчиков.
      * сделано статиками чтобы можно было вызывать для других объектов не создавая, только по id.
-     * @param $id
+     * @param int $id
      */
-    public static function afterUpdate($id)
+    public static function afterUpdate(int $id)
     {
         $model_class_name = self::getMyGlobalizedClassName();
 
@@ -99,7 +99,10 @@ trait FactoryTrait
         self::removeObjFromCacheById($id);
     }
 
-    public function beforeDelete()
+    /**
+     * @return bool
+     */
+    public function beforeDelete(): bool
     {
         return true;
     }

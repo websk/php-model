@@ -30,16 +30,20 @@ trait ActiveRecord
     /**
      * пока работаем с полями объекта напрямую, без сеттеров/геттеров
      * этот метод позволяет писать в защищенные свойства (используется, например, в CRUD)
-     * @param $fields_arr
+     * @param array $fields_arr
      */
-    public function ar_setFields($fields_arr)
+    public function ar_setFields(array $fields_arr)
     {
         foreach ($fields_arr as $field_name => $field_value) {
             $this->$field_name = $field_value;
         }
     }
 
-    public function getFieldValueByName($field_name)
+    /**
+     * @param string $field_name
+     * @return mixed
+     */
+    public function getFieldValueByName(string $field_name)
     {
         return $this->$field_name;
     }
@@ -56,12 +60,21 @@ trait ActiveRecord
         }
     }
 
-    public function getIdByFieldNamesArr($field_names_arr)
+    /**
+     * @param array $field_names_arr
+     * @return int|null
+     * @throws \Exception
+     */
+    public function getIdByFieldNamesArr(array $field_names_arr): ?int
     {
         return ActiveRecordHelper::getIdByFieldNamesArr($this, $field_names_arr);
     }
 
-    public function load($id)
+    /**
+     * @param int $id
+     * @return bool
+     */
+    public function load(int $id)
     {
         return ActiveRecordHelper::loadModelObj($this, $id);
     }

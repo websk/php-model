@@ -1,6 +1,8 @@
 {
     "name": "websk/php-model",
     "require": {
+        "php": "^7.4",
+        "ext-pdo":  "*",
         "websk/php-db": "1.2.*",
         "websk/php-cache": "1.1.*",
         "websk/php-config": "1.0.*",

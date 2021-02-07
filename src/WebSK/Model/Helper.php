@@ -12,10 +12,10 @@ class Helper
      * Глобализация имен классов не является абсолютно необходимой,
      * но в большом проекте проще и безопаснее всегда использовать глобальные имена классов.
      * Пых всегда возвращает имена классов полные (со всеми неймспейсами), но не глобальные (без \ в начале).
-     * @param $class_name
+     * @param string $class_name
      * @return string
      */
-    public static function globalizeClassName($class_name)
+    public static function globalizeClassName(string $class_name): string
     {
         if (!preg_match("@^\\\\@", $class_name)) { // если в начале имени класса нет слэша - добавляем
             $class_name = '\\' . $class_name;
@@ -25,11 +25,11 @@ class Helper
     }
 
     /**
-     * @param $class_name string Принимает как глобальное, так и неглобальное имя класса.
-     * @param $interface_class_name string Имя интерфейса, обязательно не глобальное!
+     * @param string $class_name Принимает как глобальное, так и неглобальное имя класса.
+     * @param string $interface_class_name Имя интерфейса, обязательно не глобальное!
      * @throws \Exception
      */
-    public static function exceptionIfClassNotImplementsInterface($class_name, $interface_class_name)
+    public static function exceptionIfClassNotImplementsInterface(string $class_name, string $interface_class_name)
     {
         $global_class_name = self::globalizeClassName($class_name);
 

@@ -13,7 +13,7 @@ namespace WebSK\Model;
  */
 interface InterfaceLoad
 {
-    public function load($id);
+    public function load(int $id);
 
     public function getId();
 }

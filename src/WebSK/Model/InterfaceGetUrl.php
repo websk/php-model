@@ -2,6 +2,14 @@
 
 namespace WebSK\Model;
 
-interface InterfaceGetUrl {
-    public function getUrl();
+/**
+ * Interface InterfaceGetUrl
+ * @package WebSK\Model
+ */
+interface InterfaceGetUrl
+{
+    /**
+     * @return string
+     */
+    public function getUrl(): string;
 }

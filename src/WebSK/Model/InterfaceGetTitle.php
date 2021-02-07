@@ -9,5 +9,8 @@ namespace WebSK\Model;
  */
 interface InterfaceGetTitle
 {
-    public function getTitle();
+    /**
+     * @return string
+     */
+    public function getTitle(): string;
 } 
