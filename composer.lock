@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "25c6dfd254971dc7f0a798f971d4e02d",
+    "content-hash": "3c34ffe8e2c8d6e5308a3378971f7b07",
     "packages": [
         {
             "name": "psr/container",
@@ -142,38 +142,6 @@
             "time": "2025-02-09T10:12:49+00:00"
         },
         {
-            "name": "websk/php-config",
-            "version": "2.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/websk/php-config.git",
-                "reference": "57f0481617988daffea45ef871f78a09dc58f233"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/websk/php-config/zipball/57f0481617988daffea45ef871f78a09dc58f233",
-                "reference": "57f0481617988daffea45ef871f78a09dc58f233",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^8.3"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "description": "PHP configs wrapper",
-            "homepage": "https://websk.ru/",
-            "support": {
-                "issues": "https://github.com/websk/php-config/issues",
-                "source": "https://github.com/websk/php-config/tree/2.0.0"
-            },
-            "time": "2024-08-08T07:17:03+00:00"
-        },
-        {
             "name": "websk/php-db",
             "version": "2.1.0",
             "source": {
@@ -208,39 +176,6 @@
                 "source": "https://github.com/websk/php-db/tree/2.1.0"
             },
             "time": "2025-03-25T05:30:14+00:00"
-        },
-        {
-            "name": "websk/php-utils",
-            "version": "2.1.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/websk/php-utils.git",
-                "reference": "1fe69ffbf539aa62aa536b1ac11b09759f41e71e"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/websk/php-utils/zipball/1fe69ffbf539aa62aa536b1ac11b09759f41e71e",
-                "reference": "1fe69ffbf539aa62aa536b1ac11b09759f41e71e",
-                "shasum": ""
-            },
-            "require": {
-                "ext-json": "*",
-                "ext-mbstring": "*",
-                "php": "^8.3"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "description": "PHP utils",
-            "support": {
-                "issues": "https://github.com/websk/php-utils/issues",
-                "source": "https://github.com/websk/php-utils/tree/2.1.1"
-            },
-            "time": "2025-03-25T05:39:40+00:00"
         }
     ],
     "packages-dev": [],

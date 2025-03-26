@@ -2,8 +2,6 @@
 
 namespace WebSK\Model;
 
-use WebSK\Utils\Assert;
-
 /**
  * Для работы с ActiveRecord необходимо:
  *
@@ -85,7 +83,11 @@ trait ActiveRecord
         // Проверяем связанные данные
         if (isset($model_class_name::$related_models_arr)) {
             foreach ($model_class_name::$related_models_arr as $related_model_class_name => $related_model_data) {
-                Assert::assert(array_key_exists('link_field', $related_model_data));
+                if (!array_key_exists('link_field', $related_model_data)) {
+                    throw new \Exception(
+                        'Missing link_field in $related_model_data'
+                    );
+                }
 
                 $related_field_name = $related_model_data['field_name'];
 

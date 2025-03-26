@@ -5,8 +5,6 @@
 
 namespace WebSK\Model;
 
-use WebSK\Utils\Assert;
-
 /**
  * Trait FactoryTrait
  * @package WebSK\Model
@@ -37,7 +35,11 @@ trait FactoryTrait
         $obj = Factory::createAndLoadObject($class_name, $id_to_load);
 
         if ($exception_if_not_loaded) {
-            Assert::assert($obj);
+            if (!$obj) {
+                throw new \Exception(
+                     'Object is not loaded'
+                );
+            }
         }
 
         return $obj;
@@ -55,7 +57,11 @@ trait FactoryTrait
         $obj = Factory::createAndLoadObjectByFieldsArr($class_name, $fields_arr);
 
         if ($exception_if_not_loaded) {
-            Assert::assert($obj);
+            if (!$obj) {
+                throw new \Exception(
+                    'Object is not loaded'
+                );
+            }
         }
 
         return $obj;
@@ -82,7 +88,11 @@ trait FactoryTrait
 
         if (isset($model_class_name::$depends_on_models_arr)) {
             foreach ($model_class_name::$depends_on_models_arr as $depends_model_class_name => $depends_model_data) {
-                Assert::assert(array_key_exists('link_field', $depends_model_data));
+                if (!array_key_exists('link_field', $depends_model_data)) {
+                    throw new \Exception(
+                        'Missing link_field in $depends_model_data'
+                    );
+                }
 
                 $model_obj = Factory::createAndLoadObject($model_class_name, $id);
 
@@ -119,7 +129,11 @@ trait FactoryTrait
 
         if (isset($model_class_name::$depends_on_models_arr)) {
             foreach ($model_class_name::$depends_on_models_arr as $depends_model_class_name => $depends_model_data) {
-                Assert::assert(array_key_exists('link_field', $depends_model_data));
+                if (!array_key_exists('link_field', $depends_model_data)) {
+                    throw new \Exception(
+                        'Missing link_field in $depends_model_data'
+                    );
+                }
 
                 $reflect = new \ReflectionClass($this);
                 $property_obj = $reflect->getProperty($depends_model_data['link_field']);

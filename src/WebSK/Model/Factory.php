@@ -2,9 +2,7 @@
 
 namespace WebSK\Model;
 
-use WebSK\Config\ConfWrapper;
 use WebSK\Cache\CacheWrapper;
-use WebSK\Utils\Assert;
 
 /**
  * Class Factory
@@ -12,7 +10,7 @@ use WebSK\Utils\Assert;
  */
 class Factory
 {
-    const DEFAULT_CACHE_TTL_SEC = 60;
+    const int DEFAULT_CACHE_TTL_SEC = 60;
 
     /**
      * @param string $class_name
@@ -58,7 +56,7 @@ class Factory
             return null;
         }
 
-        $cache_ttl_seconds = (int)ConfWrapper::value('cache.expire', self::DEFAULT_CACHE_TTL_SEC);
+        $cache_ttl_seconds = self::DEFAULT_CACHE_TTL_SEC;
 
         if ($obj instanceof InterfaceCacheTtlSeconds) {
             $cache_ttl_seconds = $obj->getCacheTtlSeconds();
@@ -80,7 +78,9 @@ class Factory
         $obj = new $class_name;
 
         if (!($obj instanceof InterfaceLoad)) {
-            Assert::assert($obj);
+            throw new \Exception(
+                $class_name . ' does not implement InterfaceLoad'
+            );
         }
 
         $id_to_load = call_user_func_array([$obj, "getIdByFieldNamesArr"], [$fields_arr]);
