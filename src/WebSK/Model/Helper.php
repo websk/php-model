@@ -29,7 +29,7 @@ class Helper
      * @param string $interface_class_name Имя интерфейса, обязательно не глобальное!
      * @throws \Exception
      */
-    public static function exceptionIfClassNotImplementsInterface(string $class_name, string $interface_class_name)
+    public static function exceptionIfClassNotImplementsInterface(string $class_name, string $interface_class_name): void
     {
         $global_class_name = self::globalizeClassName($class_name);
 

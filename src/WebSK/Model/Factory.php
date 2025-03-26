@@ -28,7 +28,7 @@ class Factory
      * @param string $class_name
      * @param int $object_id
      */
-    public static function removeObjectFromCache(string $class_name, int $object_id)
+    public static function removeObjectFromCache(string $class_name, int $object_id): void
     {
         $cache_key = self::getObjectCacheId($class_name, $object_id);
         CacheWrapper::delete($cache_key);

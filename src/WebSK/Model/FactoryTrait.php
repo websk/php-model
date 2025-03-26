@@ -88,7 +88,6 @@ trait FactoryTrait
 
                 $reflect = new \ReflectionClass($model_obj);
                 $property_obj = $reflect->getProperty($depends_model_data['link_field']);
-                $property_obj->setAccessible(true);
 
                 $depends_id = $property_obj->getValue($model_obj);
 
@@ -124,7 +123,6 @@ trait FactoryTrait
 
                 $reflect = new \ReflectionClass($this);
                 $property_obj = $reflect->getProperty($depends_model_data['link_field']);
-                $property_obj->setAccessible(true);
 
                 $depends_id = $property_obj->getValue($this);
 

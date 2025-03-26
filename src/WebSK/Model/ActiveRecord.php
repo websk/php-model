@@ -28,11 +28,10 @@ use WebSK\Utils\Assert;
 trait ActiveRecord
 {
     /**
-     * пока работаем с полями объекта напрямую, без сеттеров/геттеров
-     * этот метод позволяет писать в защищенные свойства (используется, например, в CRUD)
+     * метод позволяет писать в защищенные свойства (используется, например, в CRUD)
      * @param array $fields_arr
      */
-    public function ar_setFields(array $fields_arr)
+    public function ar_setFields(array $fields_arr): void
     {
         foreach ($fields_arr as $field_name => $field_value) {
             $this->$field_name = $field_value;
@@ -43,12 +42,12 @@ trait ActiveRecord
      * @param string $field_name
      * @return mixed
      */
-    public function getFieldValueByName(string $field_name)
+    public function getFieldValueByName(string $field_name): mixed
     {
         return $this->$field_name;
     }
 
-    public function save()
+    public function save(): void
     {
         ActiveRecordHelper::saveModelObj($this);
 
@@ -74,7 +73,7 @@ trait ActiveRecord
      * @param int $id
      * @return bool
      */
-    public function load(int $id)
+    public function load(int $id):bool
     {
         return ActiveRecordHelper::loadModelObj($this, $id);
     }

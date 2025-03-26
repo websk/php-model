@@ -30,7 +30,7 @@ class ActiveRecordHelper
      * Сохранение записи
      * @param $model_obj
      */
-    public static function saveModelObj($model_obj)
+    public static function saveModelObj($model_obj): void
     {
         self::exceptionIfObjectIsIncompatibleWithActiveRecord($model_obj);
 
@@ -55,14 +55,12 @@ class ActiveRecordHelper
                 continue; // игнорируем статические свойства класса - они относятся не к объекту, а только к классу (http://www.php.net/manual/en/language.oop5.static.php), и в них хранятся настройки ActiveRecord и CRUD
                 // также игнорируем свойства класса перечисленные в игнор листе $active_record_ignore_fields_arr
             }
-            $property_obj->setAccessible(true);
             $fields_to_save_arr[$property_obj->getName()] = $property_obj->getValue($model_obj);
         }
 
         unset($fields_to_save_arr[$db_id_field_name]);
 
         $property_obj = $reflect->getProperty($db_id_field_name);
-        $property_obj->setAccessible(true);
         $model_id_value = $property_obj->getValue($model_obj);
 
         if ($model_id_value == '') {
@@ -92,16 +90,15 @@ class ActiveRecordHelper
                     $placeholders_arr) . ' where ' . $db_id_field_name . ' = ?';
             DBWrapper::query($query, $values_arr);
         }
-
     }
 
     /**
      * Загружаем запись
      * @param $model_obj
-     * @param $id
+     * @param int $id
      * @return bool
      */
-    public static function loadModelObj($model_obj, int $id)
+    public static function loadModelObj($model_obj, int $id): bool
     {
         self::exceptionIfObjectIsIncompatibleWithActiveRecord($model_obj);
 
@@ -121,7 +118,6 @@ class ActiveRecordHelper
         $reflect = new \ReflectionClass($model_class_name);
         foreach ($data_obj as $field_name => $field_value) {
             $property = $reflect->getProperty($field_name);
-            $property->setAccessible(true);
             $property->setValue($model_obj, $field_value);
         }
 
@@ -141,7 +137,6 @@ class ActiveRecordHelper
                 );
 
                 $property = $reflect->getProperty($related_model_data['field_name']);
-                $property->setAccessible(true);
                 $property->setValue($model_obj, $related_ids_arr);
             }
         }
@@ -191,7 +186,7 @@ class ActiveRecordHelper
      * @param $model_obj
      * @return \PDOStatement
      */
-    public static function deleteModelObj($model_obj)
+    public static function deleteModelObj($model_obj): \PDOStatement
     {
         $model_class_name = get_class($model_obj);
         $db_table_name = $model_class_name::DB_TABLE_NAME;
@@ -201,7 +196,6 @@ class ActiveRecordHelper
 
         $reflect = new \ReflectionClass($model_obj);
         $property_obj = $reflect->getProperty($db_id_field_name);
-        $property_obj->setAccessible(true);
         $model_id_value = $property_obj->getValue($model_obj);
 
         $result = DBWrapper::query(
@@ -218,7 +212,7 @@ class ActiveRecordHelper
      * @param $obj
      * @throws \Exception
      */
-    public static function exceptionIfObjectIsIncompatibleWithActiveRecord($obj)
+    public static function exceptionIfObjectIsIncompatibleWithActiveRecord($obj): void
     {
         if (!is_object($obj)) {
             throw new \Exception('must be object');
@@ -233,7 +227,7 @@ class ActiveRecordHelper
      * @param string $class_name
      * @throws \Exception
      */
-    public static function exceptionIfClassIsIncompatibleWithActiveRecord(string $class_name)
+    public static function exceptionIfClassIsIncompatibleWithActiveRecord(string $class_name): void
     {
         if (!defined($class_name . '::DB_TABLE_NAME')) {
             throw new \Exception('class must provide DB_TABLE_NAME constant to use ActiveRecord');
